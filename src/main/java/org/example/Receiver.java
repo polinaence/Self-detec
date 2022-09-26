@@ -1,9 +1,7 @@
 package org.example;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
+import java.net.*;
 import java.util.UUID;
 
 public class Receiver implements Runnable {
@@ -31,7 +29,9 @@ public class Receiver implements Runnable {
     @Override
     public void run() {
         try {
-            socket.joinGroup(addr);
+            NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getByName("192.168.0.109"));
+            InetSocketAddress socketAddress = new InetSocketAddress(addr,PORT);
+            socket.joinGroup(socketAddress,networkInterface);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
